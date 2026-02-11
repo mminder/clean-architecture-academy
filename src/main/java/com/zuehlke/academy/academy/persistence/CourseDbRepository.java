@@ -1,6 +1,7 @@
 package com.zuehlke.academy.academy.persistence;
 
 import com.zuehlke.academy.academy.application.ports.CourseRepository;
+import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel;
 import com.zuehlke.academy.academy.domain.*;
 import com.zuehlke.academy.academy.domain.shared.Email;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class CourseDbRepository implements CourseRepository {
 
     @Override
-    public List<Course> findAllCourses() {
+    public List<CourseOverviewReadModel> findAllCourseOverviews() {
         Lesson lesson1 = new Lesson(
                 "Introduction to Java",
                 LocalDateTime.of(2026, 3, 1, 9, 0),
@@ -43,7 +44,15 @@ public class CourseDbRepository implements CourseRepository {
                 "A complete beginner course",
                 List.of(courseRun)
         );
-        return List.of(course);
+
+        CourseOverviewReadModel courseOverviewReadModel = new CourseOverviewReadModel(
+                course.id,
+                course.name,
+                course.description,
+                course.nextCourseRunStartTime()
+        );
+
+        return List.of(courseOverviewReadModel);
     }
 
 }

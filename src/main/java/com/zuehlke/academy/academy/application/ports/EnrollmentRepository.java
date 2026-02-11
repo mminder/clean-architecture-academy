@@ -8,6 +8,4 @@ import java.util.UUID;
 
 public interface EnrollmentRepository {
     List<UserCourseRunEnrollmentReadModel> findAllCourseRunEnrollmentsForUser(UUID userId);
-
-    void create(Enrollment newEnrollment);
 }

@@ -38,7 +38,7 @@ public class CourseRun {
         return trainer;
     }
 
-    public Enrollment enrollUser(UUID userId) {
+    public void enrollUser(UUID userId) {
         List<Enrollment> confirmedEnrollments = enrollments.stream().filter(Enrollment::isConfirmed).toList();
         if (confirmedEnrollments.size() >= maxParticipants) {
             throw new ApplicationException("Enrollment not possible, CourseRun is full");
@@ -48,7 +48,6 @@ public class CourseRun {
         }
         Enrollment newEnrollment = new Enrollment(UUID.randomUUID(), userId, EnrollmentStatus.CONFIRMED, Instant.now());
         enrollments.add(newEnrollment);
-        return newEnrollment;
     }
 
     public int availableSeats() {

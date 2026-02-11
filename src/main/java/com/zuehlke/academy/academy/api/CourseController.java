@@ -1,8 +1,8 @@
 package com.zuehlke.academy.academy.api;
 
-import com.zuehlke.academy.academy.api.dto.CourseResponse;
+import com.zuehlke.academy.academy.api.dto.CourseOverviewResponse;
 import com.zuehlke.academy.academy.application.LoadAllCourses;
-import com.zuehlke.academy.academy.domain.Course;
+import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,15 +31,14 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of courses")
     })
-    public List<CourseResponse> getAllCourses() {
-        List<Course> courses = loadAllCourses.execute();
+    public List<CourseOverviewResponse> getAllCourses() {
+        List<CourseOverviewReadModel> courses = loadAllCourses.execute();
         return courses.stream()
-                .map(course -> new CourseResponse(
-                        course.id.toString(),
-                        course.name,
-                        course.description,
-                        toDateString(course.nextCourseRunStartTime()),
-                        course.courseRuns.stream().map(courseRun -> courseRun.id().toString()).toList()
+                .map(courseOverview -> new CourseOverviewResponse(
+                        courseOverview.courseId().toString(),
+                        courseOverview.name(),
+                        courseOverview.description(),
+                        toDateString(courseOverview.nextRunDate())
                 ))
                 .toList();
     }

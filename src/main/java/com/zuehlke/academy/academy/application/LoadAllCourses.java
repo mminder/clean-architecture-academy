@@ -1,7 +1,7 @@
 package com.zuehlke.academy.academy.application;
 
 import com.zuehlke.academy.academy.application.ports.CourseRepository;
-import com.zuehlke.academy.academy.domain.Course;
+import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +18,7 @@ public class LoadAllCourses {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> execute() {
-        // TODO DISCUSS: this fetches all courses with all their CourseRuns, Enrollments, etc. Maybe a read model is better here for performance reasons?
-        return courseRepository.findAllCourses();
+    public List<CourseOverviewReadModel> execute() {
+        return courseRepository.findAllCourseOverviews();
     }
 }

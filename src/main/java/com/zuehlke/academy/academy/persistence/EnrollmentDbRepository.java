@@ -25,9 +25,4 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
                 )
         );
     }
-
-    @Override
-    public void create(Enrollment newEnrollment) {
-        // NO OP
-    }
 }
