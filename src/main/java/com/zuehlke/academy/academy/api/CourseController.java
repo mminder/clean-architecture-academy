@@ -1,7 +1,7 @@
 package com.zuehlke.academy.academy.api;
 
 import com.zuehlke.academy.academy.api.dto.CourseOverviewResponse;
-import com.zuehlke.academy.academy.application.LoadAllCourses;
+import com.zuehlke.academy.academy.application.LoadCoursesOverviewList;
 import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,10 +20,10 @@ import java.util.List;
 @Tag(name = "Courses", description = "Course management API")
 public class CourseController {
 
-    private final LoadAllCourses loadAllCourses;
+    private final LoadCoursesOverviewList loadCoursesOverviewList;
 
-    public CourseController(LoadAllCourses loadAllCourses) {
-        this.loadAllCourses = loadAllCourses;
+    public CourseController(LoadCoursesOverviewList loadCoursesOverviewList) {
+        this.loadCoursesOverviewList = loadCoursesOverviewList;
     }
 
     @GetMapping
@@ -32,7 +32,7 @@ public class CourseController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of courses")
     })
     public List<CourseOverviewResponse> getAllCourses() {
-        List<CourseOverviewReadModel> courses = loadAllCourses.execute();
+        List<CourseOverviewReadModel> courses = loadCoursesOverviewList.execute();
         return courses.stream()
                 .map(courseOverview -> new CourseOverviewResponse(
                         courseOverview.courseId().toString(),

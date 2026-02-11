@@ -2,9 +2,10 @@ plugins {
 	java
 	id("org.springframework.boot") version "4.0.2"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("org.flywaydb.flyway") version "12.0.0"
 }
 
-extra["flyway.version"] = "11.1.0"
+extra["flyway.version"] = "12.0.0"
 
 group = "com.zuehlke.academy"
 version = "0.0.1-SNAPSHOT"
@@ -14,6 +15,12 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(25)
 	}
+}
+
+flyway {
+	url = "jdbc:postgresql://localhost:5432/academy"
+	user = "academy"
+	password = "academy"
 }
 
 repositories {

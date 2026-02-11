@@ -23,10 +23,13 @@ public class EnrollmentEntity {
 
     private Instant createdAt;
 
-    public EnrollmentEntity(UUID id, Long version, UUID userId, EnrollmentStatus status, Instant createdAt) {
+    private UUID courseRunId;
+
+    public EnrollmentEntity(UUID id, Long version, UUID userId, UUID courseRunId, EnrollmentStatus status, Instant createdAt) {
         this.id = id;
         this.version = version;
         this.userId = userId;
+        this.courseRunId = courseRunId;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -49,5 +52,9 @@ public class EnrollmentEntity {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public UUID getCourseRunId() {
+        return courseRunId;
     }
 }

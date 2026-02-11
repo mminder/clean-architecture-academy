@@ -10,11 +10,11 @@ import java.util.List;
  * Fetches an "overview list" of all courses.
  */
 @Service
-public class LoadAllCourses {
+public class LoadCoursesOverviewList {
 
     private final CourseRepository courseRepository;
 
-    public LoadAllCourses(CourseRepository courseRepository) {
+    public LoadCoursesOverviewList(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
 
