@@ -1,5 +1,6 @@
 CREATE TABLE enrollments (
     id UUID PRIMARY KEY,
+    version BIGINT NOT NULL DEFAULT 0,
     user_id UUID NOT NULL,
     status VARCHAR(50) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
