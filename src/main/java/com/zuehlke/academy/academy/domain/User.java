@@ -17,4 +17,12 @@ public class User {
         this.name = name;
         this.email = email;
     }
+
+    public UUID id() {
+        return id;
+    }
+
+    public boolean isStudent(){
+        return roles.contains(Role.STUDENT);
+    }
 }

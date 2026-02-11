@@ -2,6 +2,7 @@ package com.zuehlke.academy.academy.api;
 
 import com.zuehlke.academy.academy.api.dto.CourseOfferingResponse;
 import com.zuehlke.academy.academy.application.LoadAllCourseOfferings;
+import com.zuehlke.academy.academy.application.readmodel.CourseOfferingReadModel;
 import com.zuehlke.academy.academy.domain.Course;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,18 +28,18 @@ public class CourseController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all courses", description = "Retrieves a list of all available course offerings")
+    @Operation(summary = "Get all course offerings", description = "Retrieves a list of all available course offerings")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of courses")
     })
     public List<CourseOfferingResponse> getAllCourseOfferings() {
-        List<Course> courses = loadAllCourseOfferings.execute();
+        List<CourseOfferingReadModel> courses = loadAllCourseOfferings.execute();
         return courses.stream()
-                .map(course -> new CourseOfferingResponse(
-                        course.id.toString(),
-                        course.name,
-                        course.description,
-                        toDateString(course.nextCourseRunStartTime())
+                .map(courseOffering -> new CourseOfferingResponse(
+                        courseOffering.courseId().toString(),
+                        courseOffering.name(),
+                        courseOffering.description(),
+                        toDateString(courseOffering.nextCourseRunStartTime())
                 ))
                 .toList();
     }
