@@ -4,6 +4,7 @@ import com.zuehlke.academy.academy.shared.exception.ApplicationException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,7 +82,7 @@ class CourseTest {
         assertDoesNotThrow(
                 () -> {
                     var courseRuns = new ArrayList<CourseRun>();
-                    courseRuns.add(new CourseRun(20));
+                    courseRuns.add(new CourseRun(20, Collections.emptyList()));
                     new Course(UUID.randomUUID(), "Java Programming", "Learn Java basics", courseRuns);
                 }
         );

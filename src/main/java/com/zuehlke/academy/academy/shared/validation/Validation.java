@@ -20,4 +20,11 @@ public class Validation {
         }
         return object;
     }
+
+    public static int minInt(int value, int minimum, String message) {
+        if (value < minimum) {
+            throw new ApplicationException(message);
+        }
+        return value;
+    }
 }
