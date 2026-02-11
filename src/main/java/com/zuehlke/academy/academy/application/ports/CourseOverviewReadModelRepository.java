@@ -4,6 +4,6 @@ import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel
 
 import java.util.List;
 
-public interface CourseRepository {
+public interface CourseOverviewReadModelRepository {
     List<CourseOverviewReadModel> findAllCourseOverviews();
 }

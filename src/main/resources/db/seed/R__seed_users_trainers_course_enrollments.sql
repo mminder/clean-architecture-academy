@@ -21,3 +21,9 @@ INSERT INTO lessons (id, version, course_run_id, description, start_time, end_ti
 INSERT INTO enrollments (id, version, user_id, course_run_id, status, created_at) VALUES
   ('a1b2c3d4-e5f6-47a8-9b0c-1d2e3f4a5b6c', 0, '6d2c6f7a-8f2d-4c6a-9d79-2a2f0c5f7a01', '9f1c2d3e-4f5a-4b6c-8d7e-8f9a0b1c2d3e', 'CONFIRMED', '2026-02-10T09:15:00Z'),
   ('c7d8e9f0-1a2b-4c5d-8e9f-0a1b2c3d4e5f', 0, 'e3a1b2c3-4d5e-4f60-9a7b-1c2d3e4f5061', '9f1c2d3e-4f5a-4b6c-8d7e-8f9a0b1c2d3e', 'CANCELLED', '2026-02-10T10:30:00Z');
+
+INSERT INTO courses (id, version, name, description) VALUES
+  ('3b2a1c0d-4e5f-6a7b-8c9d-0e1f2a3b4c5d', 0, 'Spring Boot Fundamentals', 'Learn the basics of Spring Boot and REST APIs');
+
+INSERT INTO course_course_runs (course_id, course_run_id) VALUES
+  ('3b2a1c0d-4e5f-6a7b-8c9d-0e1f2a3b4c5d', '9f1c2d3e-4f5a-4b6c-8d7e-8f9a0b1c2d3e');

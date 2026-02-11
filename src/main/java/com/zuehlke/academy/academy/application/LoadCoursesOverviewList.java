@@ -1,6 +1,6 @@
 package com.zuehlke.academy.academy.application;
 
-import com.zuehlke.academy.academy.application.ports.CourseRepository;
+import com.zuehlke.academy.academy.application.ports.CourseOverviewReadModelRepository;
 import com.zuehlke.academy.academy.application.readmodel.CourseOverviewReadModel;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ import java.util.List;
 @Service
 public class LoadCoursesOverviewList {
 
-    private final CourseRepository courseRepository;
+    private final CourseOverviewReadModelRepository courseOverviewReadModelRepository;
 
-    public LoadCoursesOverviewList(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
+    public LoadCoursesOverviewList(CourseOverviewReadModelRepository courseOverviewReadModelRepository) {
+        this.courseOverviewReadModelRepository = courseOverviewReadModelRepository;
     }
 
     public List<CourseOverviewReadModel> execute() {
-        return courseRepository.findAllCourseOverviews();
+        return courseOverviewReadModelRepository.findAllCourseOverviews();
     }
 }

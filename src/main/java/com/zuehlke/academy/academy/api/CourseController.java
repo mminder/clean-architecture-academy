@@ -38,7 +38,7 @@ public class CourseController {
                         courseOverview.courseId().toString(),
                         courseOverview.name(),
                         courseOverview.description(),
-                        toDateString(courseOverview.nextRunDate())
+                        toDateString(courseOverview.nextCourseRunStartTime())
                 ))
                 .toList();
     }
