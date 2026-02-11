@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +44,16 @@ public class UserController {
         return new UserEnrollmentResponse(
                 enrollment.enrollmentId().toString(),
                 enrollment.userId().toString(),
-                enrollment.courseRunId().toString()
+                enrollment.courseRunId().toString(),
+                enrollment.enrollmentStatus().name(),
+                toIsoString(enrollment.enrolledAt())
         );
+    }
+
+    private String toIsoString(Instant instant) {
+        if (instant == null) {
+            return null;
+        }
+        return DateTimeFormatter.ISO_INSTANT.format(instant);
     }
 }

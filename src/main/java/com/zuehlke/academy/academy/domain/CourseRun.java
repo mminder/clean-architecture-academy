@@ -13,12 +13,14 @@ public class CourseRun {
     private final int maxParticipants;
     private final List<Lesson> lessons;
     private final List<Enrollment> enrollments;
+    private final TrainerProfile trainer;
 
-    public CourseRun(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments) {
+    public CourseRun(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments, TrainerProfile trainer) {
         this.id = Validation.notNull(id, "CourseRun id must not be null");
         this.maxParticipants = Validation.minInt(maxParticipants, 1, "CourseRun maxParticipants must be at least 1");
         this.lessons = Validation.notNull(lessons, "CourseRun lessons must not be null");
         this.enrollments = Validation.notNull(enrollments, "CourseRun enrollments must not be null");
+        this.trainer = Validation.notNull(trainer, "CourseRun enrollments trainer not be null");
     }
 
     public LocalDateTime startTime() {
@@ -28,19 +30,29 @@ public class CourseRun {
                 .orElse(null);
     }
 
-    public UUID id(){
+    public UUID id() {
         return id;
     }
 
-    public void enrollUser(UUID userId) {
+    public TrainerProfile trainer() {
+        return trainer;
+    }
+
+    public Enrollment enrollUser(UUID userId) {
         List<Enrollment> confirmedEnrollments = enrollments.stream().filter(Enrollment::isConfirmed).toList();
-        if(confirmedEnrollments.size() >= maxParticipants) {
+        if (confirmedEnrollments.size() >= maxParticipants) {
             throw new ApplicationException("Enrollment not possible, CourseRun is full");
         }
-        if(confirmedEnrollments.stream().anyMatch(enrollment -> enrollment.userId().equals(userId))) {
+        if (confirmedEnrollments.stream().anyMatch(enrollment -> enrollment.userId().equals(userId))) {
             throw new ApplicationException("Enrollment not possible, user is already enrolled");
         }
         Enrollment newEnrollment = new Enrollment(UUID.randomUUID(), userId, EnrollmentStatus.CONFIRMED, Instant.now());
         enrollments.add(newEnrollment);
+        return newEnrollment;
+    }
+
+    public int availableSeats() {
+        List<Enrollment> confirmedEnrollments = enrollments.stream().filter(Enrollment::isConfirmed).toList();
+        return maxParticipants - confirmedEnrollments.size();
     }
 }

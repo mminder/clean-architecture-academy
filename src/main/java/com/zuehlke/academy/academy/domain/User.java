@@ -22,7 +22,11 @@ public class User {
         return id;
     }
 
-    public boolean isStudent(){
+    public String name() {
+        return name;
+    }
+
+    public boolean isStudent() {
         return roles.contains(Role.STUDENT);
     }
 }

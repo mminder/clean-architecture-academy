@@ -1,9 +1,9 @@
 package com.zuehlke.academy.academy.application.ports;
 
-import com.zuehlke.academy.academy.application.readmodel.CourseOfferingReadModel;
+import com.zuehlke.academy.academy.domain.Course;
 
 import java.util.List;
 
 public interface CourseRepository {
-    List<CourseOfferingReadModel> findAllCourseOfferings();
+    List<Course> findAllCourses();
 }

@@ -34,7 +34,7 @@ The OpenAPI configuration can be customized in:
 ## Available Endpoints
 
 ### Courses API
-- `GET /api/courses` - Retrieve all course offerings
+- `GET /api/courses` - Retrieve all courses
 
 ## Annotations Used
 

@@ -1,8 +1,7 @@
 package com.zuehlke.academy.academy.api;
 
-import com.zuehlke.academy.academy.api.dto.CourseOfferingResponse;
-import com.zuehlke.academy.academy.application.LoadAllCourseOfferings;
-import com.zuehlke.academy.academy.application.readmodel.CourseOfferingReadModel;
+import com.zuehlke.academy.academy.api.dto.CourseResponse;
+import com.zuehlke.academy.academy.application.LoadAllCourses;
 import com.zuehlke.academy.academy.domain.Course;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,25 +20,26 @@ import java.util.List;
 @Tag(name = "Courses", description = "Course management API")
 public class CourseController {
 
-    private final LoadAllCourseOfferings loadAllCourseOfferings;
+    private final LoadAllCourses loadAllCourses;
 
-    public CourseController(LoadAllCourseOfferings loadAllCourseOfferings) {
-        this.loadAllCourseOfferings = loadAllCourseOfferings;
+    public CourseController(LoadAllCourses loadAllCourses) {
+        this.loadAllCourses = loadAllCourses;
     }
 
     @GetMapping
-    @Operation(summary = "Get all course offerings", description = "Retrieves a list of all available course offerings")
+    @Operation(summary = "Get all courses", description = "Retrieves a list of all available courses")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of courses")
     })
-    public List<CourseOfferingResponse> getAllCourseOfferings() {
-        List<CourseOfferingReadModel> courses = loadAllCourseOfferings.execute();
+    public List<CourseResponse> getAllCourses() {
+        List<Course> courses = loadAllCourses.execute();
         return courses.stream()
-                .map(courseOffering -> new CourseOfferingResponse(
-                        courseOffering.courseId().toString(),
-                        courseOffering.name(),
-                        courseOffering.description(),
-                        toDateString(courseOffering.nextCourseRunStartTime())
+                .map(course -> new CourseResponse(
+                        course.id.toString(),
+                        course.name,
+                        course.description,
+                        toDateString(course.nextCourseRunStartTime()),
+                        course.courseRuns.stream().map(courseRun -> courseRun.id().toString()).toList()
                 ))
                 .toList();
     }

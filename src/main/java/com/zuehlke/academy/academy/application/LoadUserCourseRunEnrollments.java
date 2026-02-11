@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Loads an overview for a given user, listing all his enrollments.
+ */
 @Service
 public class LoadUserCourseRunEnrollments {
 
