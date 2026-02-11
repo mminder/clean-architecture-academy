@@ -18,4 +18,8 @@ public class Lesson {
             throw new ApplicationException("Lesson endTime must be after startTime");
         }
     }
+
+    public LocalDateTime startTime() {
+        return startTime;
+    }
 }

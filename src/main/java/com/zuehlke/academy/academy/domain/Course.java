@@ -2,6 +2,7 @@ package com.zuehlke.academy.academy.domain;
 
 import com.zuehlke.academy.academy.shared.validation.Validation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,5 +17,13 @@ public class Course {
         this.name = Validation.notBlank(name, "Course name must not be blank");
         this.description = Validation.notNull(description, "Course description must not be null");
         this.courseRuns = Validation.notNull(courseRuns, "Course courseRuns must not be null");
+    }
+
+    public LocalDateTime nextCourseRunStartTime() {
+        return courseRuns.stream()
+                .map(CourseRun::startTime)
+                .filter(java.util.Objects::nonNull)
+                .min(LocalDateTime::compareTo)
+                .orElse(null);
     }
 }

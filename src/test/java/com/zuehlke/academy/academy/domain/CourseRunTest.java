@@ -88,4 +88,63 @@ class CourseRunTest {
         // When & Then
         assertDoesNotThrow(() -> new CourseRun(15, lessons));
     }
+
+    // startTime() method tests
+    @Test
+    void shouldReturnNullWhenNoLessons() {
+        CourseRun courseRun = new CourseRun(10, List.of());
+
+        assertNull(courseRun.startTime());
+    }
+
+    @Test
+    void shouldReturnStartTimeOfSingleLesson() {
+        LocalDateTime start = LocalDateTime.of(2026, 3, 1, 9, 0);
+        LocalDateTime end = LocalDateTime.of(2026, 3, 1, 12, 0);
+        Lesson lesson = new Lesson("Java Basics", start, end);
+        CourseRun courseRun = new CourseRun(10, List.of(lesson));
+
+        assertEquals(start, courseRun.startTime());
+    }
+
+    @Test
+    void shouldReturnEarliestStartTimeWhenMultipleLessons() {
+        LocalDateTime start1 = LocalDateTime.of(2026, 3, 2, 14, 0);
+        LocalDateTime end1 = LocalDateTime.of(2026, 3, 2, 17, 0);
+        LocalDateTime start2 = LocalDateTime.of(2026, 3, 1, 9, 0); // Earliest
+        LocalDateTime end2 = LocalDateTime.of(2026, 3, 1, 12, 0);
+        LocalDateTime start3 = LocalDateTime.of(2026, 3, 3, 10, 0);
+        LocalDateTime end3 = LocalDateTime.of(2026, 3, 3, 13, 0);
+
+        Lesson lesson1 = new Lesson("Advanced Topics", start1, end1);
+        Lesson lesson2 = new Lesson("Introduction", start2, end2);
+        Lesson lesson3 = new Lesson("Conclusion", start3, end3);
+
+        CourseRun courseRun = new CourseRun(15, List.of(lesson1, lesson2, lesson3));
+
+        assertEquals(start2, courseRun.startTime());
+    }
+
+    @Test
+    void shouldReturnEarliestStartTimeRegardlessOfListOrder() {
+        LocalDateTime start1 = LocalDateTime.of(2026, 3, 5, 9, 0);
+        LocalDateTime end1 = LocalDateTime.of(2026, 3, 5, 12, 0);
+        LocalDateTime start2 = LocalDateTime.of(2026, 3, 1, 9, 0); // Earliest
+        LocalDateTime end2 = LocalDateTime.of(2026, 3, 1, 12, 0);
+        LocalDateTime start3 = LocalDateTime.of(2026, 3, 3, 9, 0);
+        LocalDateTime end3 = LocalDateTime.of(2026, 3, 3, 12, 0);
+
+        Lesson lesson1 = new Lesson("Day 5", start1, end1);
+        Lesson lesson2 = new Lesson("Day 1", start2, end2);
+        Lesson lesson3 = new Lesson("Day 3", start3, end3);
+
+        // Test with different list orders
+        CourseRun courseRun1 = new CourseRun(10, List.of(lesson1, lesson2, lesson3));
+        CourseRun courseRun2 = new CourseRun(10, List.of(lesson3, lesson1, lesson2));
+        CourseRun courseRun3 = new CourseRun(10, List.of(lesson2, lesson3, lesson1));
+
+        assertEquals(start2, courseRun1.startTime());
+        assertEquals(start2, courseRun2.startTime());
+        assertEquals(start2, courseRun3.startTime());
+    }
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -29,14 +31,23 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of courses")
     })
-    public List<CourseOfferingResponse> getAllCourses() {
+    public List<CourseOfferingResponse> getAllCourseOfferings() {
         List<Course> courses = loadAllCourseOfferings.execute();
         return courses.stream()
                 .map(course -> new CourseOfferingResponse(
                         course.id.toString(),
                         course.name,
-                        course.description
+                        course.description,
+                        toDateString(course.nextCourseRunStartTime())
                 ))
                 .toList();
     }
+
+    private String toDateString(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return null;
+        }
+        return dateTime.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+
 }
