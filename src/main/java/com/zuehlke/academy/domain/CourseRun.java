@@ -4,11 +4,13 @@ import java.util.UUID;
 
 public class CourseRun {
     private final UUID id;
+    private final Long version;
     private final int maxParticipants;
-    private final UUID trainerId;
+    private UUID trainerId;
 
-    public CourseRun(UUID id, int maxParticipants, UUID trainerId) {
+    public CourseRun(UUID id, Long version, int maxParticipants, UUID trainerId) {
         this.id = id;
+        this.version = version;
         this.maxParticipants = maxParticipants;
         this.trainerId = trainerId;
     }
@@ -23,5 +25,13 @@ public class CourseRun {
 
     public UUID trainerId() {
         return trainerId;
+    }
+
+    public Long version() {
+        return version;
+    }
+
+    public void changeTrainer(UUID trainerProfileId) {
+        this.trainerId = trainerProfileId;
     }
 }

@@ -19,13 +19,16 @@ public class EnrollUserInCourseRun {
     private final UserRepository userRepository;
     private final CourseRunRepository courseRunRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private final CourseRunEnrollmentPolicy courseRunEnrollmentPolicy;
 
     public EnrollUserInCourseRun(UserRepository userRepository,
                                  CourseRunRepository courseRunRepository,
-                                 EnrollmentRepository enrollmentRepository) {
+                                 EnrollmentRepository enrollmentRepository,
+                                 CourseRunEnrollmentPolicy courseRunEnrollmentPolicy) {
         this.userRepository = userRepository;
         this.courseRunRepository = courseRunRepository;
         this.enrollmentRepository = enrollmentRepository;
+        this.courseRunEnrollmentPolicy = courseRunEnrollmentPolicy;
     }
 
     public void execute(UUID courseRunId, UUID userId) {
@@ -36,7 +39,7 @@ public class EnrollUserInCourseRun {
 
         CourseRun courseRun = this.courseRunRepository.findById(courseRunId);
         List<Enrollment> courseEnrollments = this.enrollmentRepository.findAllForCourseRun(courseRunId);
-        CourseRunEnrollmentPolicy.validateEnrollmentAllowed(courseRun, courseEnrollments);
+        courseRunEnrollmentPolicy.validateEnrollmentAllowed(courseRun, courseEnrollments);
 
         this.enrollmentRepository.create(Enrollment.create(userId, courseRunId));
     }

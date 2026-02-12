@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface CourseRunRepository {
     CourseRun findById(UUID id);
+
+    void update(CourseRun courseRun);
 }

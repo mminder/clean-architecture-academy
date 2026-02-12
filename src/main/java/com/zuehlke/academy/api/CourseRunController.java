@@ -1,6 +1,8 @@
 package com.zuehlke.academy.api;
 
+import com.zuehlke.academy.api.dto.ChangeCourseRunTrainerRequest;
 import com.zuehlke.academy.api.dto.CourseRunEnrollmentRequest;
+import com.zuehlke.academy.application.ChangeCourseRunTrainer;
 import com.zuehlke.academy.application.dto.CourseRunDetailsResponse;
 import com.zuehlke.academy.application.EnrollUserInCourseRun;
 import com.zuehlke.academy.application.LoadCourseRunDetails;
@@ -20,10 +22,14 @@ public class CourseRunController {
 
     private final LoadCourseRunDetails loadCourseRunDetails;
     private final EnrollUserInCourseRun enrollUserInCourseRun;
+    private final ChangeCourseRunTrainer changeCourseRunTrainer;
 
-    public CourseRunController(LoadCourseRunDetails loadCourseRunDetails, EnrollUserInCourseRun enrollUserInCourseRun) {
+    public CourseRunController(LoadCourseRunDetails loadCourseRunDetails,
+                              EnrollUserInCourseRun enrollUserInCourseRun,
+                              ChangeCourseRunTrainer changeCourseRunTrainer) {
         this.loadCourseRunDetails = loadCourseRunDetails;
         this.enrollUserInCourseRun = enrollUserInCourseRun;
+        this.changeCourseRunTrainer = changeCourseRunTrainer;
     }
 
     @GetMapping("/{courseRunId}")
@@ -42,6 +48,16 @@ public class CourseRunController {
     })
     public ResponseEntity<Void> enrollUserInCourseRun(@PathVariable String courseRunId, @RequestBody CourseRunEnrollmentRequest request) {
         enrollUserInCourseRun.execute(UUID.fromString(courseRunId), UUID.fromString(request.userId()));
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{courseRunId}/trainer")
+    @Operation(summary = "Change the trainer of a course run")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Trainer changed successfully")
+    })
+    public ResponseEntity<Void> changeCourseRunTrainer(@PathVariable String courseRunId, @RequestBody ChangeCourseRunTrainerRequest request) {
+        changeCourseRunTrainer.execute(UUID.fromString(courseRunId), UUID.fromString(request.trainerProfileId()));
         return ResponseEntity.noContent().build();
     }
 }
