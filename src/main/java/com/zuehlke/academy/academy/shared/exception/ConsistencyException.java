@@ -1,7 +1,0 @@
-package com.zuehlke.academy.academy.shared.exception;
-
-public class ConsistencyException extends RuntimeException {
-    public ConsistencyException(String message) {
-        super(message);
-    }
-}
