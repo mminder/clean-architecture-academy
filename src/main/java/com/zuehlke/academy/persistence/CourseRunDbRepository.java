@@ -1,9 +1,9 @@
 package com.zuehlke.academy.persistence;
 
 import com.zuehlke.academy.application.ports.CourseRunRepository;
-import com.zuehlke.academy.domain.CourseRun;
-import com.zuehlke.academy.domain.Enrollment;
-import com.zuehlke.academy.domain.Lesson;
+import com.zuehlke.academy.domain.courseRun.CourseRunAggregate;
+import com.zuehlke.academy.domain.courseRun.Enrollment;
+import com.zuehlke.academy.domain.courseRun.Lesson;
 import com.zuehlke.academy.persistence.entity.CourseRunEntity;
 import com.zuehlke.academy.persistence.entity.EnrollmentEntity;
 import com.zuehlke.academy.persistence.entity.LessonEntity;
@@ -17,27 +17,27 @@ public class CourseRunDbRepository implements CourseRunRepository {
 
     private final CourseRunJdbcRepository courseRunJdbcRepository;
 
-    public CourseRunDbRepository(CourseRunJdbcRepository courseRunJdbcRepository){
+    public CourseRunDbRepository(CourseRunJdbcRepository courseRunJdbcRepository) {
         this.courseRunJdbcRepository = courseRunJdbcRepository;
     }
 
     @Override
-    public CourseRun findById(UUID id) {
+    public CourseRunAggregate findById(UUID id) {
         CourseRunEntity entity = courseRunJdbcRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException("CourseRun not found: " + id));
 
         List<Lesson> lessons = mapLessons(entity.getLessons());
         List<Enrollment> enrollments = mapEnrollments(entity.getEnrollments());
 
-        return new CourseRun(entity.getId(), entity.getMaxParticipants(), lessons, enrollments, entity.getTrainer().getId());
+        return new CourseRunAggregate(entity.getId(), entity.getMaxParticipants(), lessons, enrollments, entity.getTrainer().getId());
     }
 
     @Override
-    public void update(CourseRun courseRun) {
-        CourseRunEntity existing = courseRunJdbcRepository.findById(courseRun.id())
-                .orElseThrow(() -> new ApplicationException("CourseRun not found: " + courseRun.id()));
+    public void update(CourseRunAggregate courseRunAggregate) {
+        CourseRunEntity existing = courseRunJdbcRepository.findById(courseRunAggregate.id())
+                .orElseThrow(() -> new ApplicationException("CourseRun not found: " + courseRunAggregate.id()));
 
-        Set<EnrollmentEntity> enrollmentEntities = mapEnrollmentsToEntities(courseRun.enrollments());
+        Set<EnrollmentEntity> enrollmentEntities = mapEnrollmentsToEntities(courseRunAggregate.enrollments());
 
         // TODO DISCUSS: should we offer a complete update or only selectively update what is currently modifiable in the domain?
         // alternative would be to check "existsById" and then do a full update
@@ -99,4 +99,5 @@ public class CourseRunDbRepository implements CourseRunRepository {
                 ))
                 .collect(java.util.stream.Collectors.toCollection(LinkedHashSet::new));
     }
+
 }

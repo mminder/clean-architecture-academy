@@ -1,4 +1,4 @@
-package com.zuehlke.academy.domain;
+package com.zuehlke.academy.domain.courseRun;
 
 import java.time.Instant;
 import java.util.UUID;

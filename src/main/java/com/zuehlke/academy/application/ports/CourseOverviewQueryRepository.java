@@ -4,6 +4,6 @@ import com.zuehlke.academy.application.dto.CourseOverviewResponse;
 
 import java.util.List;
 
-public interface CourseOverviewReadModelRepository {
+public interface CourseOverviewQueryRepository {
     List<CourseOverviewResponse> findAllCourseOverviews();
 }

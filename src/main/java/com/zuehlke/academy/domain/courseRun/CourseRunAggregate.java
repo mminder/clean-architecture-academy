@@ -1,4 +1,4 @@
-package com.zuehlke.academy.domain;
+package com.zuehlke.academy.domain.courseRun;
 
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import com.zuehlke.academy.shared.validation.Validation;
@@ -8,14 +8,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class CourseRun {
+public class CourseRunAggregate {
     private final UUID id;
     private final int maxParticipants;
     private final List<Lesson> lessons;
     private final List<Enrollment> enrollments;
     private final UUID trainerId;
 
-    public CourseRun(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments, UUID trainerId) {
+    public CourseRunAggregate(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments, UUID trainerId) {
         this.id = Validation.notNull(id, "CourseRun id must not be null");
         this.maxParticipants = Validation.minInt(maxParticipants, 1, "CourseRun maxParticipants must be at least 1");
         this.lessons = Validation.notNull(lessons, "CourseRun lessons must not be null");

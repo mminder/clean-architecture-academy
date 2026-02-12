@@ -1,6 +1,6 @@
 package com.zuehlke.academy.application.dto;
 
-import com.zuehlke.academy.domain.EnrollmentStatus;
+import com.zuehlke.academy.domain.courseRun.EnrollmentStatus;
 
 import java.time.Instant;
 import java.util.UUID;

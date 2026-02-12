@@ -2,7 +2,7 @@ package com.zuehlke.academy.application;
 
 import com.zuehlke.academy.application.ports.EnrollmentRepository;
 import com.zuehlke.academy.application.dto.UserCourseRunEnrollmentResponse;
-import com.zuehlke.academy.domain.Enrollment;
+import com.zuehlke.academy.domain.courseRun.Enrollment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +21,8 @@ public class LoadUserCourseRunEnrollments {
     }
 
     public List<UserCourseRunEnrollmentResponse> execute(UUID userId) {
+        // TODO: when keeping the CourseRunAggregate with Enrollment inside, this circumvents that.
+        // here we would actually need a query repository
         List<Enrollment> enrollments = this.enrollmentRepository.findAllEnrollmentsForUser(userId);
         return enrollments.stream()
                 .map(enrollment -> new UserCourseRunEnrollmentResponse(

@@ -1,7 +1,7 @@
 package com.zuehlke.academy.persistence;
 
 import com.zuehlke.academy.application.ports.EnrollmentRepository;
-import com.zuehlke.academy.domain.Enrollment;
+import com.zuehlke.academy.domain.courseRun.Enrollment;
 import com.zuehlke.academy.persistence.entity.EnrollmentEntity;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,11 @@
 package com.zuehlke.academy.application.ports;
 
-import com.zuehlke.academy.domain.CourseRun;
+import com.zuehlke.academy.domain.courseRun.CourseRunAggregate;
 
 import java.util.UUID;
 
 public interface CourseRunRepository {
-    CourseRun findById(UUID id);
+    CourseRunAggregate findById(UUID id);
 
-    void update(CourseRun courseRun);
+    void update(CourseRunAggregate courseRunAggregate);
 }

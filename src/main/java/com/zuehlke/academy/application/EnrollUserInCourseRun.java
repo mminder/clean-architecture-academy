@@ -3,7 +3,7 @@ package com.zuehlke.academy.application;
 import com.zuehlke.academy.application.ports.CourseRunRepository;
 import com.zuehlke.academy.application.ports.EnrollmentRepository;
 import com.zuehlke.academy.application.ports.UserRepository;
-import com.zuehlke.academy.domain.CourseRun;
+import com.zuehlke.academy.domain.courseRun.CourseRunAggregate;
 import com.zuehlke.academy.domain.User;
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import org.springframework.stereotype.Service;
@@ -29,8 +29,8 @@ public class EnrollUserInCourseRun {
 
         // TODO: evaluate usage of more narrow CourseRun that doesn't implement nested enrollments "automatically"
         // Specific CourseRunEnrollmentContext could be used to simply create/validate the enrollment. Saving would then use EnrollmentRepository.
-        CourseRun courseRun = this.courseRunRepository.findById(courseRunId);
-        courseRun.enrollUser(user.id());
-        this.courseRunRepository.update(courseRun);
+        CourseRunAggregate courseRunAggregate = this.courseRunRepository.findById(courseRunId);
+        courseRunAggregate.enrollUser(user.id());
+        this.courseRunRepository.update(courseRunAggregate);
     }
 }
