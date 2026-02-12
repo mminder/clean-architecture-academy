@@ -34,7 +34,23 @@ public class CourseRunDbRepository implements CourseRunRepository {
 
     @Override
     public void update(CourseRun courseRun) {
-        // TODO: Persist updates to enrollments and lessons as needed.
+        CourseRunEntity existing = courseRunJdbcRepository.findById(courseRun.id())
+                .orElseThrow(() -> new ApplicationException("CourseRun not found: " + courseRun.id()));
+
+        Set<EnrollmentEntity> enrollmentEntities = mapEnrollmentsToEntities(courseRun.enrollments());
+
+        // TODO DISCUSS: should we offer a complete update or only selectively update what is currently modifiable in the domain?
+        // alternative would be to check "existsById" and then do a full update
+        CourseRunEntity updated = new CourseRunEntity(
+                existing.getId(),
+                existing.getVersion(),
+                existing.getMaxParticipants(),
+                existing.getTrainer(),
+                existing.getLessons(),
+                enrollmentEntities
+        );
+
+        courseRunJdbcRepository.save(updated);
     }
 
     private List<Lesson> mapLessons(Set<LessonEntity> lessonEntities) {
@@ -65,5 +81,22 @@ public class CourseRunDbRepository implements CourseRunRepository {
                         entity.getCreatedAt()
                 ))
                 .toList();
+    }
+
+    private Set<EnrollmentEntity> mapEnrollmentsToEntities(List<Enrollment> enrollments) {
+        if (enrollments == null || enrollments.isEmpty()) {
+            return new LinkedHashSet<>();
+        }
+        return enrollments.stream()
+                .filter(Objects::nonNull)
+                .map(enrollment -> new EnrollmentEntity(
+                        enrollment.id(),
+                        null,
+                        enrollment.userId(),
+                        enrollment.courseRunId(),
+                        enrollment.status(),
+                        enrollment.createdAt()
+                ))
+                .collect(java.util.stream.Collectors.toCollection(LinkedHashSet::new));
     }
 }

@@ -18,6 +18,10 @@ public class Enrollment {
         this.createdAt = createdAt;
     }
 
+    public static Enrollment create(UUID userId, UUID courseRunId) {
+        return new Enrollment(UUID.randomUUID(), userId, courseRunId, EnrollmentStatus.CONFIRMED, Instant.now());
+    }
+
     public UUID id() {
         return id;
     }

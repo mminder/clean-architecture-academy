@@ -27,6 +27,8 @@ public class EnrollUserInCourseRun {
             throw new ApplicationException("Only students can enroll in course runs.");
         }
 
+        // TODO: evaluate usage of more narrow CourseRun that doesn't implement nested enrollments "automatically"
+        // Specific CourseRunEnrollmentContext could be used to simply create/validate the enrollment. Saving would then use EnrollmentRepository.
         CourseRun courseRun = this.courseRunRepository.findById(courseRunId);
         courseRun.enrollUser(user.id());
         this.courseRunRepository.update(courseRun);
