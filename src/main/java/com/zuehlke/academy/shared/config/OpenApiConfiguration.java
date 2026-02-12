@@ -1,4 +1,4 @@
-package com.zuehlke.academy.config;
+package com.zuehlke.academy.shared.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
