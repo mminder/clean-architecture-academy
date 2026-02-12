@@ -1,4 +1,4 @@
-package com.zuehlke.academy.domain;
+package com.zuehlke.academy.domain.courseRun;
 
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import com.zuehlke.academy.shared.validation.Validation;

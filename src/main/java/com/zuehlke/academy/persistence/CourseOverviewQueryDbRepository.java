@@ -1,6 +1,7 @@
 package com.zuehlke.academy.persistence;
 
 import com.zuehlke.academy.application.dto.CourseOverviewResponse;
+import com.zuehlke.academy.application.ports.CourseOverviewQueryRepository;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,15 +10,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class CourseOverviewReadModelJdbcRepository {
+public class CourseOverviewQueryDbRepository implements CourseOverviewQueryRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public CourseOverviewReadModelJdbcRepository(NamedParameterJdbcTemplate jdbcTemplate) {
+    public CourseOverviewQueryDbRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<CourseOverviewResponse> findAll() {
+    public List<CourseOverviewResponse> findAllCourseOverviews() {
         String sql = """
                 SELECT c.id AS course_id,
                        c.name AS course_name,

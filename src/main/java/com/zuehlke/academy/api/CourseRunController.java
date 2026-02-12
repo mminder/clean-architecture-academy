@@ -1,9 +1,9 @@
 package com.zuehlke.academy.api;
 
 import com.zuehlke.academy.api.dto.CourseRunEnrollmentRequest;
-import com.zuehlke.academy.application.dto.CourseRunResponse;
+import com.zuehlke.academy.application.dto.CourseRunDetailsResponse;
 import com.zuehlke.academy.application.EnrollUserInCourseRun;
-import com.zuehlke.academy.application.LoadCourseRun;
+import com.zuehlke.academy.application.LoadCourseRunDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,11 +18,11 @@ import java.util.UUID;
 @Tag(name = "Course Runs", description = "Course run management API")
 public class CourseRunController {
 
-    private final LoadCourseRun loadCourseRun;
+    private final LoadCourseRunDetails loadCourseRunDetails;
     private final EnrollUserInCourseRun enrollUserInCourseRun;
 
-    public CourseRunController(LoadCourseRun loadCourseRun, EnrollUserInCourseRun enrollUserInCourseRun) {
-        this.loadCourseRun = loadCourseRun;
+    public CourseRunController(LoadCourseRunDetails loadCourseRunDetails, EnrollUserInCourseRun enrollUserInCourseRun) {
+        this.loadCourseRunDetails = loadCourseRunDetails;
         this.enrollUserInCourseRun = enrollUserInCourseRun;
     }
 
@@ -31,8 +31,8 @@ public class CourseRunController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved course run")
     })
-    public CourseRunResponse getCourseRunById(@PathVariable String courseRunId) {
-        return this.loadCourseRun.execute(UUID.fromString(courseRunId));
+    public CourseRunDetailsResponse getCourseRunById(@PathVariable String courseRunId) {
+        return this.loadCourseRunDetails.execute(UUID.fromString(courseRunId));
     }
 
     @PostMapping("/{courseRunId}/enrollments")
