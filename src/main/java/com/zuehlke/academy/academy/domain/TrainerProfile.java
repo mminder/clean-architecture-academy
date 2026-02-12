@@ -5,15 +5,15 @@ import java.util.UUID;
 public class TrainerProfile {
     private final UUID id;
     private final String description;
-    private final User user;
+    private final UUID userId;
 
-    public TrainerProfile(UUID id, String description, User user) {
+    public TrainerProfile(UUID id, String description, UUID userId) {
         this.id = id;
         this.description = description;
-        this.user = user;
+        this.userId = userId;
     }
 
-    public User user() {
-        return user;
+    public UUID userId() {
+        return userId;
     }
 }

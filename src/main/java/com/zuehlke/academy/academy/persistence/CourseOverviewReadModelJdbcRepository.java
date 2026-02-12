@@ -38,7 +38,7 @@ public class CourseOverviewReadModelJdbcRepository {
         Map<UUID, CourseOverviewReadModelEntity> byCourse = new LinkedHashMap<>();
         Map<UUID, Map<UUID, CourseOverviewReadModelEntity.CourseRunOverviewEntity>> byCourseRun = new LinkedHashMap<>();
 
-        // TODO DISCUSS: is there a better, easier way to map this?
+        // TODO: change that MIN is fetched directly by SQL, then introduce custom mapper (see gemini)
         for (Row row : rows) {
             CourseOverviewReadModelEntity course = byCourse.get(row.courseId);
             if (course == null) {

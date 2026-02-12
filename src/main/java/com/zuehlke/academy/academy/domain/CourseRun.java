@@ -13,14 +13,14 @@ public class CourseRun {
     private final int maxParticipants;
     private final List<Lesson> lessons;
     private final List<Enrollment> enrollments;
-    private final TrainerProfile trainer;
+    private final UUID trainerId;
 
-    public CourseRun(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments, TrainerProfile trainer) {
+    public CourseRun(UUID id, int maxParticipants, List<Lesson> lessons, List<Enrollment> enrollments, UUID trainerId) {
         this.id = Validation.notNull(id, "CourseRun id must not be null");
         this.maxParticipants = Validation.minInt(maxParticipants, 1, "CourseRun maxParticipants must be at least 1");
         this.lessons = Validation.notNull(lessons, "CourseRun lessons must not be null");
         this.enrollments = Validation.notNull(enrollments, "CourseRun enrollments must not be null");
-        this.trainer = Validation.notNull(trainer, "CourseRun enrollments trainer not be null");
+        this.trainerId = Validation.notNull(trainerId, "CourseRun enrollments trainer not be null");
     }
 
     public LocalDateTime startTime() {
@@ -34,8 +34,8 @@ public class CourseRun {
         return id;
     }
 
-    public TrainerProfile trainer() {
-        return trainer;
+    public UUID trainerId() {
+        return trainerId;
     }
 
     public void enrollUser(UUID userId) {

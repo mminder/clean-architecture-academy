@@ -1,7 +1,7 @@
 package com.zuehlke.academy.academy.api;
 
 import com.zuehlke.academy.academy.api.dto.CourseRunEnrollmentRequest;
-import com.zuehlke.academy.academy.api.dto.CourseRunResponse;
+import com.zuehlke.academy.academy.application.dto.CourseRunResponse;
 import com.zuehlke.academy.academy.application.EnrollUserInCourseRun;
 import com.zuehlke.academy.academy.application.LoadCourseRun;
 import com.zuehlke.academy.academy.domain.CourseRun;
@@ -33,8 +33,7 @@ public class CourseRunController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved course run")
     })
     public CourseRunResponse getCourseRunById(@PathVariable String courseRunId) {
-        CourseRun courseRun = this.loadCourseRun.execute(UUID.fromString(courseRunId));
-        return new CourseRunResponse(courseRun.id().toString(), courseRun.trainer().user().name(), courseRun.availableSeats());
+        return this.loadCourseRun.execute(UUID.fromString(courseRunId));
     }
 
     @PostMapping("/{courseRunId}/enrollments")

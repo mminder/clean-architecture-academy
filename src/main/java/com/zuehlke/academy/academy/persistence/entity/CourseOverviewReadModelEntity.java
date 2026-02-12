@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+// TODO: this "entity" is not necessary, construct read model directly
 public record CourseOverviewReadModelEntity(UUID courseId,
                                             String name,
                                             String description,
