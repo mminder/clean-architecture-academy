@@ -3,8 +3,8 @@ package com.zuehlke.academy.domain;
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import com.zuehlke.academy.shared.validation.Validation;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,12 +46,15 @@ public class CourseRun {
         if (confirmedEnrollments.stream().anyMatch(enrollment -> enrollment.userId().equals(userId))) {
             throw new ApplicationException("Enrollment not possible, user is already enrolled");
         }
-        Enrollment newEnrollment = new Enrollment(UUID.randomUUID(), userId, this.id, EnrollmentStatus.CONFIRMED, Instant.now());
-        enrollments.add(newEnrollment);
+        enrollments.add(Enrollment.create(userId, this.id));
     }
 
     public int availableSeats() {
         List<Enrollment> confirmedEnrollments = enrollments.stream().filter(Enrollment::isConfirmed).toList();
         return maxParticipants - confirmedEnrollments.size();
+    }
+
+    public List<Enrollment> enrollments() {
+        return Collections.unmodifiableList(enrollments);
     }
 }
