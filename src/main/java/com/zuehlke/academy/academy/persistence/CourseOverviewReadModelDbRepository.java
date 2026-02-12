@@ -2,7 +2,6 @@ package com.zuehlke.academy.academy.persistence;
 
 import com.zuehlke.academy.academy.application.ports.CourseOverviewReadModelRepository;
 import com.zuehlke.academy.academy.application.dto.CourseOverviewResponse;
-import com.zuehlke.academy.academy.persistence.entity.CourseOverviewReadModelEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,17 +17,7 @@ public class CourseOverviewReadModelDbRepository implements CourseOverviewReadMo
 
     @Override
     public List<CourseOverviewResponse> findAllCourseOverviews() {
-        return courseOverviewReadModelJdbcRepository.findAll().stream()
-                .map(this::toReadModel)
-                .toList();
+        return courseOverviewReadModelJdbcRepository.findAll();
     }
 
-    private CourseOverviewResponse toReadModel(CourseOverviewReadModelEntity entity) {
-        return new CourseOverviewResponse(
-                entity.courseId(),
-                entity.name(),
-                entity.description(),
-                entity.nextCourseRunStartTime()
-        );
-    }
 }
