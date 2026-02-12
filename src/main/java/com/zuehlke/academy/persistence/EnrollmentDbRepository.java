@@ -1,14 +1,13 @@
 package com.zuehlke.academy.persistence;
 
 import com.zuehlke.academy.application.ports.EnrollmentRepository;
-import com.zuehlke.academy.domain.courseRun.Enrollment;
+import com.zuehlke.academy.domain.Enrollment;
 import com.zuehlke.academy.persistence.entity.EnrollmentEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-// TODO DISCUSS: how do I prevent write operations on this? Updates must always go through CourseRun Aggregate Root
 @Repository
 public class EnrollmentDbRepository implements EnrollmentRepository {
 
@@ -19,8 +18,29 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
     }
 
     @Override
-    public List<Enrollment> findAllEnrollmentsForUser(UUID userId) {
+    public List<Enrollment> findAllForUser(UUID userId) {
         List<EnrollmentEntity> enrollments = enrollmentJdbcRepository.findByUserId(userId);
+        return enrollments.stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
+    public void create(Enrollment enrollment) {
+        EnrollmentEntity entity = new EnrollmentEntity(
+                enrollment.id(),
+                null,
+                enrollment.userId(),
+                enrollment.courseRunId(),
+                enrollment.status(),
+                enrollment.createdAt()
+        );
+        enrollmentJdbcRepository.save(entity);
+    }
+
+    @Override
+    public List<Enrollment> findAllForCourseRun(UUID courseRunId) {
+        List<EnrollmentEntity> enrollments = enrollmentJdbcRepository.findByCourseRunId(courseRunId);
         return enrollments.stream()
                 .map(this::toDomain)
                 .toList();
@@ -30,7 +50,7 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
         return new Enrollment(
                 entity.getId(),
                 entity.getUserId(),
-                entity.getCourseRunId(), // courseRunId - not in current schema
+                entity.getCourseRunId(),
                 entity.getStatus(),
                 entity.getCreatedAt()
         );

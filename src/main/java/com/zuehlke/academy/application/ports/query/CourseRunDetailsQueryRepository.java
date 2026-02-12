@@ -1,4 +1,4 @@
-package com.zuehlke.academy.application.ports;
+package com.zuehlke.academy.application.ports.query;
 
 import com.zuehlke.academy.application.dto.CourseRunDetailsResponse;
 

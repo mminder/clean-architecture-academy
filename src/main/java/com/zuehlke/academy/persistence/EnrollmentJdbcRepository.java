@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface EnrollmentJdbcRepository extends CrudRepository<EnrollmentEntity, UUID> {
     List<EnrollmentEntity> findByUserId(UUID userId);
+    List<EnrollmentEntity> findByCourseRunId(UUID courseRunId);
 }

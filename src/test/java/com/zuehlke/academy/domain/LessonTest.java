@@ -1,6 +1,5 @@
 package com.zuehlke.academy.domain;
 
-import com.zuehlke.academy.domain.courseRun.Lesson;
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import org.junit.jupiter.api.Test;
 

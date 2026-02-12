@@ -3,10 +3,8 @@ package com.zuehlke.academy.persistence.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Table("course_runs")
@@ -22,21 +20,12 @@ public class CourseRunEntity {
 
     private AggregateReference<TrainerEntity, UUID> trainer;
 
-    @MappedCollection(idColumn = "course_run_id")
-    private Set<LessonEntity> lessons;
-
-    @MappedCollection(idColumn = "course_run_id")
-    private Set<EnrollmentEntity> enrollments;
-
     public CourseRunEntity(UUID id, Long version, int maxParticipants,
-                          AggregateReference<TrainerEntity, UUID> trainer,
-                          Set<LessonEntity> lessons, Set<EnrollmentEntity> enrollments) {
+                           AggregateReference<TrainerEntity, UUID> trainer) {
         this.id = id;
         this.version = version;
         this.maxParticipants = maxParticipants;
         this.trainer = trainer;
-        this.lessons = lessons;
-        this.enrollments = enrollments;
     }
 
     public UUID getId() {
@@ -53,13 +42,5 @@ public class CourseRunEntity {
 
     public AggregateReference<TrainerEntity, UUID> getTrainer() {
         return trainer;
-    }
-
-    public Set<LessonEntity> getLessons() {
-        return lessons;
-    }
-
-    public Set<EnrollmentEntity> getEnrollments() {
-        return enrollments;
     }
 }

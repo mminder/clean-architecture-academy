@@ -1,7 +1,7 @@
-package com.zuehlke.academy.persistence;
+package com.zuehlke.academy.persistence.query;
 
 import com.zuehlke.academy.application.dto.CourseRunDetailsResponse;
-import com.zuehlke.academy.application.ports.CourseRunDetailsQueryRepository;
+import com.zuehlke.academy.application.ports.query.CourseRunDetailsQueryRepository;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;

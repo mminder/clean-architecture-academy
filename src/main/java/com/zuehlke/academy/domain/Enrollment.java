@@ -1,6 +1,4 @@
-package com.zuehlke.academy.domain.courseRun;
-
-import com.zuehlke.academy.domain.EnrollmentStatus;
+package com.zuehlke.academy.domain;
 
 import java.time.Instant;
 import java.util.UUID;
