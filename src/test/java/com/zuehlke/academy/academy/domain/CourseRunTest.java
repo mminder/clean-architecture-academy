@@ -1,6 +1,5 @@
 package com.zuehlke.academy.academy.domain;
 
-import com.zuehlke.academy.academy.domain.shared.Email;
 import com.zuehlke.academy.academy.shared.exception.ApplicationException;
 import org.junit.jupiter.api.Test;
 
@@ -14,33 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CourseRunTest {
 
-    TrainerProfile givenTrainer() {
-        User user1 = new User(
-                UUID.randomUUID(),
-                List.of(Role.TRAINER),
-                "John Doe",
-                new Email("trainer@example.com")
-        );
-        return new TrainerProfile(
-                UUID.randomUUID(),
-                "Java and Spring Boot trainer",
-                user1
-        );
-    }
-
     // maxParticipants validation tests
     @Test
     void shouldCreateCourseRunWithValidMaxParticipants() {
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 1, new ArrayList<>(), Collections.emptyList(), givenTrainer()));
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 10, new ArrayList<>(), Collections.emptyList(), givenTrainer()));
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 100, new ArrayList<>(), Collections.emptyList(), givenTrainer()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 1, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 10, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 100, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID()));
     }
 
     @Test
     void shouldThrowExceptionWhenMaxParticipantsIsZero() {
         ApplicationException exception = assertThrows(
                 ApplicationException.class,
-                () -> new CourseRun(UUID.randomUUID(), 0, new ArrayList<>(), Collections.emptyList(), givenTrainer())
+                () -> new CourseRun(UUID.randomUUID(), 0, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID())
         );
         assertEquals("CourseRun maxParticipants must be at least 1", exception.getMessage());
     }
@@ -49,7 +34,7 @@ class CourseRunTest {
     void shouldThrowExceptionWhenMaxParticipantsIsNegative() {
         ApplicationException exception = assertThrows(
                 ApplicationException.class,
-                () -> new CourseRun(UUID.randomUUID(), -1, new ArrayList<>(), Collections.emptyList(), givenTrainer())
+                () -> new CourseRun(UUID.randomUUID(), -1, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID())
         );
         assertEquals("CourseRun maxParticipants must be at least 1", exception.getMessage());
     }
@@ -58,7 +43,7 @@ class CourseRunTest {
     void shouldThrowExceptionWhenMaxParticipantsIsLargeNegative() {
         ApplicationException exception = assertThrows(
                 ApplicationException.class,
-                () -> new CourseRun(UUID.randomUUID(), -100, new ArrayList<>(), Collections.emptyList(), givenTrainer())
+                () -> new CourseRun(UUID.randomUUID(), -100, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID())
         );
         assertEquals("CourseRun maxParticipants must be at least 1", exception.getMessage());
     }
@@ -68,14 +53,14 @@ class CourseRunTest {
     void shouldThrowExceptionWhenLessonsIsNull() {
         ApplicationException exception = assertThrows(
                 ApplicationException.class,
-                () -> new CourseRun(UUID.randomUUID(), 10, null, Collections.emptyList(), givenTrainer())
+                () -> new CourseRun(UUID.randomUUID(), 10, null, Collections.emptyList(), UUID.randomUUID())
         );
         assertEquals("CourseRun lessons must not be null", exception.getMessage());
     }
 
     @Test
     void shouldCreateCourseRunWithEmptyLessonsList() {
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 10, new ArrayList<>(), Collections.emptyList(), givenTrainer()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 10, new ArrayList<>(), Collections.emptyList(), UUID.randomUUID()));
     }
 
     @Test
@@ -87,7 +72,7 @@ class CourseRunTest {
         List<Lesson> lessons = List.of(lesson);
 
         // When & Then
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 20, lessons, Collections.emptyList(), givenTrainer()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 20, lessons, Collections.emptyList(), UUID.randomUUID()));
     }
 
     @Test
@@ -103,13 +88,13 @@ class CourseRunTest {
         List<Lesson> lessons = List.of(lesson1, lesson2);
 
         // When & Then
-        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 15, lessons, Collections.emptyList(), givenTrainer()));
+        assertDoesNotThrow(() -> new CourseRun(UUID.randomUUID(), 15, lessons, Collections.emptyList(), UUID.randomUUID()));
     }
 
     // startTime() method tests
     @Test
     void shouldReturnNullWhenNoLessons() {
-        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 10, List.of(), Collections.emptyList(), givenTrainer());
+        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 10, List.of(), Collections.emptyList(), UUID.randomUUID());
 
         assertNull(courseRun.startTime());
     }
@@ -119,7 +104,7 @@ class CourseRunTest {
         LocalDateTime start = LocalDateTime.of(2026, 3, 1, 9, 0);
         LocalDateTime end = LocalDateTime.of(2026, 3, 1, 12, 0);
         Lesson lesson = new Lesson("Java Basics", start, end);
-        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 10, List.of(lesson), Collections.emptyList(), givenTrainer());
+        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 10, List.of(lesson), Collections.emptyList(), UUID.randomUUID());
 
         assertEquals(start, courseRun.startTime());
     }
@@ -137,7 +122,7 @@ class CourseRunTest {
         Lesson lesson2 = new Lesson("Introduction", start2, end2);
         Lesson lesson3 = new Lesson("Conclusion", start3, end3);
 
-        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 15, List.of(lesson1, lesson2, lesson3), Collections.emptyList(), givenTrainer());
+        CourseRun courseRun = new CourseRun(UUID.randomUUID(), 15, List.of(lesson1, lesson2, lesson3), Collections.emptyList(), UUID.randomUUID());
 
         assertEquals(start2, courseRun.startTime());
     }
@@ -156,9 +141,9 @@ class CourseRunTest {
         Lesson lesson3 = new Lesson("Day 3", start3, end3);
 
         // Test with different list orders
-        CourseRun courseRun1 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson1, lesson2, lesson3), Collections.emptyList(), givenTrainer());
-        CourseRun courseRun2 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson3, lesson1, lesson2), Collections.emptyList(), givenTrainer());
-        CourseRun courseRun3 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson2, lesson3, lesson1), Collections.emptyList(), givenTrainer());
+        CourseRun courseRun1 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson1, lesson2, lesson3), Collections.emptyList(), UUID.randomUUID());
+        CourseRun courseRun2 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson3, lesson1, lesson2), Collections.emptyList(), UUID.randomUUID());
+        CourseRun courseRun3 = new CourseRun(UUID.randomUUID(), 10, List.of(lesson2, lesson3, lesson1), Collections.emptyList(), UUID.randomUUID());
 
         assertEquals(start2, courseRun1.startTime());
         assertEquals(start2, courseRun2.startTime());

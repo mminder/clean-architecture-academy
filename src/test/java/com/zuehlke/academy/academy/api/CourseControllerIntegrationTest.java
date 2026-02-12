@@ -15,6 +15,7 @@ class CourseControllerIntegrationTest {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    // TODO: fix this test, there is an issue with the DB setup. Maybe we need testcontainers?
     @Test
     void shouldReturnCoursesFromApi() {
         // When

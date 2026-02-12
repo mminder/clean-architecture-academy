@@ -1,7 +1,8 @@
 package com.zuehlke.academy.academy.persistence;
 
 import com.zuehlke.academy.academy.application.ports.EnrollmentRepository;
-import com.zuehlke.academy.academy.application.readmodel.UserCourseRunEnrollmentReadModel;
+import com.zuehlke.academy.academy.application.dto.UserCourseRunEnrollmentResponse;
+import com.zuehlke.academy.academy.domain.Enrollment;
 import com.zuehlke.academy.academy.persistence.entity.EnrollmentEntity;
 import org.springframework.stereotype.Repository;
 
@@ -19,18 +20,18 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
     }
 
     @Override
-    public List<UserCourseRunEnrollmentReadModel> findAllCourseRunEnrollmentsForUser(UUID userId) {
+    public List<Enrollment> findAllEnrollmentsForUser(UUID userId) {
         List<EnrollmentEntity> enrollments = enrollmentJdbcRepository.findByUserId(userId);
         return enrollments.stream()
-                .map(this::toReadModel)
+                .map(this::toDomain)
                 .toList();
     }
 
-    private UserCourseRunEnrollmentReadModel toReadModel(EnrollmentEntity entity) {
-        return new UserCourseRunEnrollmentReadModel(
+    private Enrollment toDomain(EnrollmentEntity entity) {
+        return new Enrollment(
                 entity.getId(),
-                entity.getCourseRunId(), // courseRunId - not in current schema
                 entity.getUserId(),
+                entity.getCourseRunId(), // courseRunId - not in current schema
                 entity.getStatus(),
                 entity.getCreatedAt()
         );

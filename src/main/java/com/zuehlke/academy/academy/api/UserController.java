@@ -1,8 +1,7 @@
 package com.zuehlke.academy.academy.api;
 
-import com.zuehlke.academy.academy.api.dto.UserEnrollmentResponse;
 import com.zuehlke.academy.academy.application.LoadUserCourseRunEnrollments;
-import com.zuehlke.academy.academy.application.readmodel.UserCourseRunEnrollmentReadModel;
+import com.zuehlke.academy.academy.application.dto.UserCourseRunEnrollmentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,27 +30,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved user enrollments")
     })
-    public List<UserEnrollmentResponse> getUserEnrollments(@PathVariable String userId) {
-        List<UserCourseRunEnrollmentReadModel> enrollments = loadUserCourseRunEnrollments.execute(UUID.fromString(userId));
-        return enrollments.stream()
-                .map(this::mapToUserEnrollmentResponse)
-                .toList();
-    }
-
-    private UserEnrollmentResponse mapToUserEnrollmentResponse(UserCourseRunEnrollmentReadModel enrollment) {
-        return new UserEnrollmentResponse(
-                enrollment.enrollmentId().toString(),
-                enrollment.userId().toString(),
-                enrollment.courseRunId().toString(),
-                enrollment.enrollmentStatus().name(),
-                toIsoString(enrollment.enrolledAt())
-        );
-    }
-
-    private String toIsoString(Instant instant) {
-        if (instant == null) {
-            return null;
-        }
-        return DateTimeFormatter.ISO_INSTANT.format(instant);
+    public List<UserCourseRunEnrollmentResponse> getUserEnrollments(@PathVariable String userId) {
+        return loadUserCourseRunEnrollments.execute(UUID.fromString(userId));
     }
 }

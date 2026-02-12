@@ -60,6 +60,7 @@ public class CourseRunDbRepository implements CourseRunRepository {
                 .map(entity -> new Enrollment(
                         entity.getId(),
                         entity.getUserId(),
+                        entity.getCourseRunId(),
                         entity.getStatus(),
                         entity.getCreatedAt()
                 ))

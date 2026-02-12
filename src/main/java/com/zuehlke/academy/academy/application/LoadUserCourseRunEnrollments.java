@@ -1,7 +1,8 @@
 package com.zuehlke.academy.academy.application;
 
 import com.zuehlke.academy.academy.application.ports.EnrollmentRepository;
-import com.zuehlke.academy.academy.application.readmodel.UserCourseRunEnrollmentReadModel;
+import com.zuehlke.academy.academy.application.dto.UserCourseRunEnrollmentResponse;
+import com.zuehlke.academy.academy.domain.Enrollment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,16 @@ public class LoadUserCourseRunEnrollments {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    public List<UserCourseRunEnrollmentReadModel> execute(UUID userId) {
-        return this.enrollmentRepository.findAllCourseRunEnrollmentsForUser(userId);
+    public List<UserCourseRunEnrollmentResponse> execute(UUID userId) {
+        List<Enrollment> enrollments = this.enrollmentRepository.findAllEnrollmentsForUser(userId);
+        return enrollments.stream()
+                .map(enrollment -> new UserCourseRunEnrollmentResponse(
+                        enrollment.id(),
+                        enrollment.courseRunId(),
+                        enrollment.userId(),
+                        enrollment.status(),
+                        enrollment.createdAt()
+                ))
+                .toList();
     }
 }

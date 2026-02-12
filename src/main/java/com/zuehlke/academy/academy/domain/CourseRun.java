@@ -46,7 +46,7 @@ public class CourseRun {
         if (confirmedEnrollments.stream().anyMatch(enrollment -> enrollment.userId().equals(userId))) {
             throw new ApplicationException("Enrollment not possible, user is already enrolled");
         }
-        Enrollment newEnrollment = new Enrollment(UUID.randomUUID(), userId, EnrollmentStatus.CONFIRMED, Instant.now());
+        Enrollment newEnrollment = new Enrollment(UUID.randomUUID(), userId, this.id, EnrollmentStatus.CONFIRMED, Instant.now());
         enrollments.add(newEnrollment);
     }
 
