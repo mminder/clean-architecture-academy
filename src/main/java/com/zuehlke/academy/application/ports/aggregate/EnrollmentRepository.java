@@ -1,4 +1,4 @@
-package com.zuehlke.academy.application.ports;
+package com.zuehlke.academy.application.ports.aggregate;
 
 import com.zuehlke.academy.domain.Enrollment;
 
@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EnrollmentRepository {
-    List<Enrollment> findAllForUser(UUID userId);
+    List<Enrollment> findAllByUser(UUID userId);
 
     void create(Enrollment enrollment);
 
-    List<Enrollment> findAllForCourseRun(UUID courseRunId);
+    List<Enrollment> findAllByCourseRun(UUID courseRunId);
 }

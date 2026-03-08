@@ -43,4 +43,8 @@ public class CourseRunEntity {
     public AggregateReference<TrainerEntity, UUID> getTrainer() {
         return trainer;
     }
+
+    public void setTrainer(AggregateReference<TrainerEntity, UUID> trainer) {
+        this.trainer = trainer;
+    }
 }

@@ -1,6 +1,6 @@
 package com.zuehlke.academy.application;
 
-import com.zuehlke.academy.application.ports.EnrollmentRepository;
+import com.zuehlke.academy.application.ports.aggregate.EnrollmentRepository;
 import com.zuehlke.academy.application.dto.UserCourseRunEnrollmentResponse;
 import com.zuehlke.academy.domain.Enrollment;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,8 @@ public class LoadUserCourseRunEnrollments {
     }
 
     public List<UserCourseRunEnrollmentResponse> execute(UUID userId) {
-        List<Enrollment> enrollments = this.enrollmentRepository.findAllForUser(userId);
+        // TODO DISCUSS: we could use a read model here. However, the aggregate conveniently matches the read use case.
+        List<Enrollment> enrollments = this.enrollmentRepository.findAllByUser(userId);
         return enrollments.stream()
                 .map(enrollment -> new UserCourseRunEnrollmentResponse(
                         enrollment.id(),

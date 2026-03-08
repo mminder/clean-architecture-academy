@@ -1,6 +1,6 @@
 package com.zuehlke.academy.persistence;
 
-import com.zuehlke.academy.application.ports.EnrollmentRepository;
+import com.zuehlke.academy.application.ports.aggregate.EnrollmentRepository;
 import com.zuehlke.academy.domain.Enrollment;
 import com.zuehlke.academy.persistence.entity.EnrollmentEntity;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,7 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
     }
 
     @Override
-    public List<Enrollment> findAllForUser(UUID userId) {
+    public List<Enrollment> findAllByUser(UUID userId) {
         List<EnrollmentEntity> enrollments = enrollmentJdbcRepository.findByUserId(userId);
         return enrollments.stream()
                 .map(this::toDomain)
@@ -39,7 +39,7 @@ public class EnrollmentDbRepository implements EnrollmentRepository {
     }
 
     @Override
-    public List<Enrollment> findAllForCourseRun(UUID courseRunId) {
+    public List<Enrollment> findAllByCourseRun(UUID courseRunId) {
         List<EnrollmentEntity> enrollments = enrollmentJdbcRepository.findByCourseRunId(courseRunId);
         return enrollments.stream()
                 .map(this::toDomain)

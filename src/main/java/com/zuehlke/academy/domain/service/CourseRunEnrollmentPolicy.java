@@ -1,6 +1,6 @@
 package com.zuehlke.academy.domain.service;
 
-import com.zuehlke.academy.domain.CourseRun;
+import com.zuehlke.academy.domain.courseRun.CourseRun;
 import com.zuehlke.academy.domain.Enrollment;
 import com.zuehlke.academy.shared.exception.ApplicationException;
 import org.springframework.stereotype.Service;

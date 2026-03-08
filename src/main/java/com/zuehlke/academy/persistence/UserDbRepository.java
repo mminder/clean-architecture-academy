@@ -1,6 +1,6 @@
 package com.zuehlke.academy.persistence;
 
-import com.zuehlke.academy.application.ports.UserRepository;
+import com.zuehlke.academy.application.ports.aggregate.UserRepository;
 import com.zuehlke.academy.domain.User;
 import com.zuehlke.academy.domain.shared.Email;
 import com.zuehlke.academy.persistence.entity.UserEntity;

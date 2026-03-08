@@ -1,9 +1,9 @@
 package com.zuehlke.academy.application;
 
-import com.zuehlke.academy.application.ports.CourseRunRepository;
-import com.zuehlke.academy.application.ports.EnrollmentRepository;
-import com.zuehlke.academy.application.ports.UserRepository;
-import com.zuehlke.academy.domain.CourseRun;
+import com.zuehlke.academy.application.ports.aggregate.CourseRunRepository;
+import com.zuehlke.academy.application.ports.aggregate.EnrollmentRepository;
+import com.zuehlke.academy.application.ports.aggregate.UserRepository;
+import com.zuehlke.academy.domain.courseRun.CourseRun;
 import com.zuehlke.academy.domain.Enrollment;
 import com.zuehlke.academy.domain.service.CourseRunEnrollmentPolicy;
 import com.zuehlke.academy.domain.User;
@@ -38,9 +38,10 @@ public class EnrollUserInCourseRun {
         }
 
         CourseRun courseRun = this.courseRunRepository.findById(courseRunId);
-        List<Enrollment> courseEnrollments = this.enrollmentRepository.findAllForCourseRun(courseRunId);
+        List<Enrollment> courseEnrollments = this.enrollmentRepository.findAllByCourseRun(courseRunId);
         courseRunEnrollmentPolicy.validateEnrollmentAllowed(courseRun, courseEnrollments);
 
+        // TODO DISCUSS: we could use a command here. However, the enrollment aggregate conveniently also matches the read use case
         this.enrollmentRepository.create(Enrollment.create(userId, courseRunId));
     }
 }

@@ -19,8 +19,6 @@ public class LoadCoursesOverviewList {
     }
 
     public List<CourseOverviewResponse> execute() {
-        // TODO DISCUSS: alternatively, CourseRuns and their Lessons could be fetched separately via their own "pure" repositories to compute next start date.
-        // this could be done via a domain service
         return courseOverviewQueryRepository.findAllCourseOverviews();
     }
 }

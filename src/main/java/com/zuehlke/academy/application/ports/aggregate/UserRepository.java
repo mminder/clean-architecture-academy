@@ -1,4 +1,4 @@
-package com.zuehlke.academy.application.ports;
+package com.zuehlke.academy.application.ports.aggregate;
 
 import com.zuehlke.academy.domain.User;
 
